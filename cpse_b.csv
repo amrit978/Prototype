@@ -1,0 +1,31 @@
+material_code,description,category,material_type,dimension,specification,application,unit
+ONG-1000234,Pipe MS 50 MM Dia Schedule-40,Piping Materials,MS,50 MM Dia,IS-1239,Water supply line,MTR
+ONG-1000235,Mild Steel Pipe 100mm Sch40,Piping Materials,Mild Steel,100 MM Dia,IS-1239,Process piping high pressure,MTR
+ONG-2000561,Valve Gate 2 Inch Carbon Steel Cl150,Valves & Fittings,CS,2 Inch Bore,ASME-B16.34,Line isolation valve,EA
+ONG-2000562,SS 316 Ball Valve 1 Inch Class-300,Valves & Fittings,SS316,1 Inch Bore,ASME-B16.34,Chemical service corrosion resistant,EA
+ONG-3000891,WNRF Flange 2Inch CS 150 Class,Flanges,CS,2 Inch NB,ASME-B16.5,Pipe joint,EA
+ONG-3000892,CS Blind Flange 100 NB Cl150,Flanges,CS,100 NB,ASME-B16.5,Pipe end sealing,EA
+ONG-5000456,SS304 Hex Head Bolt M16 x 60mm,Fasteners & Hardware,SS304,M16x60mm,IS-1364,Structural and flange fastening,EA
+ONG-5000457,Nut Hex SS-304 M16 Size,Fasteners & Hardware,SS304,M16,IS-1364,Used with hex bolts,EA
+ONG-6000789,Pump Centrifugal 10 HP Three Phase,Rotating Equipment,Cast Iron,10 HP,IS-1520,Fluid transfer general purpose,EA
+ONG-6000790,Submersible Pump Single Ph 5HP,Rotating Equipment,SS Body,5 HP,IS-8034,Borewell water extraction,EA
+ONG-7000234,Cable Copper Armd 3.5C x 25 Sqmm,Electrical Cables,Copper,3.5C x 25 Sqmm,IS-7098,Power wiring distribution,MTR
+ONG-8000567,Helmet Safety Yellow Colour ISI,PPE,HDPE,Std Size,IS-2925,Head protection,EA
+ONG-8000568,Gloves Leather Industrial Safety Type,PPE,Leather,Std Size,IS-2573,Hand protection,PR
+ONG-8000569,CO2 Type Fire Extinguisher 4.5 Kg Cap,PPE,Steel with CO2,4.5 Kg,IS-2878,Electrical fire suppression,EA
+ONG-1100234,Primer Paint Epoxy Red-Oxide,Paints & Coatings,Epoxy,Std Grade,IS-2074,Anti corrosion coating,LTR
+ONG-1200567,Electrode Welding E-7018 3.15 MM,Welding Materials,Low Hydrogen Steel,3.15 MM,AWS-A5.1,Structural welding,KG
+ONG-1300890,Bearing Ball Type 6205-2RS,Bearings,Chrome Steel,6205,ISO-15,Shaft support in rotating equipment,EA
+ONG-1400123,Motor Induction 15 HP 415 Volts 3Ph,Electric Motors,CI Body Copper Wound,15HP 415V,IS-325,Driving pumps compressors,EA
+ONG-1500456,Storage Tank MS 5000 Litre Cap,Storage Tanks,MS,5000 Litre,IS-803,Bulk liquid storage,EA
+ONG-1600789,Gauge Pressure Dial Type 0-100 Psi,Instruments,SS Casing,0-100 PSI,IS-3624,Pipeline pressure monitoring,EA
+ONG-1600790,RTD Type Temperature Transmitter Unit,Instruments,SS Sheath,PT-100,IEC-60751,Process temperature monitoring,EA
+ONG-1700234,Caustic Soda Flakes Industrial Grade,Industrial Chemicals,Sodium Hydroxide,Flake,IS-252,Water treatment cleaning agent,KG
+ONG-1800567,Multipurpose Grease Lithium Base Type,Lubricants & Greases,Lithium Complex,NLGI-2,IS-7623,Machinery and bearing lubrication,KG
+ONG-2100890,Cable Tray Perforated Type 300mm Wide,Cable Accessories,Galvanized Steel,300mm width,IS-2629,Cable routing support,MTR
+ONG-2200123,Junction Box IP65 Rated Metal Body,Electrical Accessories,Mild Steel,IP65 rated,IS-8623,Cable termination protection,EA
+ONG-2300456,Diesel Generator Set 62.5 KVA Silent,Power Equipment,Steel Enclosure,62.5 KVA,IS-8528,Backup power generation,EA
+ONG-2400789,Conveyor Belt Rubber 24 Inch Width,Mining Equipment,Rubber with Fabric Ply,24 Inch width,IS-1891,Bulk material handling,MTR
+ONG-2500123,Blower Fan Industrial 5HP,Ventilation Equipment,MS Casing,5HP,IS-2312,Air circulation in confined spaces,EA
+ONG-2600456,Chain Sling Lifting 2 Ton Capacity,Lifting Equipment,Alloy Steel,2 Ton capacity,IS-6216,Load lifting and rigging,EA
+ONG-2700789,Drum Steel 210 Litre Capacity,Storage Containers,MS,210 Litre,IS-2552,Chemical and oil storage,EA

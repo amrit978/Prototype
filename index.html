@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Material Code Harmonizer — SIH26099</title>
+<style>
+  /* Light theme */
+  :root,[data-theme="light"] {
+    --bg:#f5f4f0;--surface:#ffffff;--border:#e0ddd8;--text:#1a1917;
+    --muted:#7a776f;--accent:#1a1917;--good:#1a6640;--bad:#9b2020;
+    --good-bg:#e8f5ee;--bad-bg:#fdf0f0;--pending-bg:#f0efe9;
+    --pending:#5a574f;--tag-bg:#eeecea;--row-hover:#faf9f7;
+    --toggle-bg:#e0ddd8;--toggle-knob:#ffffff;--shadow:rgba(0,0,0,0.06);
+  }
+  /* Dark theme */
+  [data-theme="dark"] {
+    --bg:#111110;--surface:#1c1c1b;--border:#2e2d2b;--text:#e8e6e1;
+    --muted:#6b6860;--accent:#e8e6e1;--good:#4ade80;--bad:#f87171;
+    --good-bg:rgba(74,222,128,0.12);--bad-bg:rgba(248,113,113,0.12);
+    --pending-bg:#252422;--pending:#9b9790;--tag-bg:#252422;
+    --row-hover:#222220;--toggle-bg:#3a3936;--toggle-knob:#e8e6e1;
+    --shadow:rgba(0,0,0,0.3);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:ui-sans-serif,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;padding:40px 32px 80px;max-width:1120px;margin:0 auto;transition:background .2s,color .2s;}
+  .site-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:36px;}
+  h1{font-size:1.25rem;font-weight:600;letter-spacing:-0.01em;}
+  .subtitle{color:var(--muted);font-size:0.82rem;margin-top:3px;}
+  h2{font-size:0.72rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);margin-bottom:16px;}
+  /* Theme toggle */
+  .theme-toggle{display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:6px;border-radius:6px;color:var(--muted);font-size:0.75rem;font-family:inherit;transition:color .15s;flex-shrink:0;margin-top:2px;}
+  .theme-toggle:hover{color:var(--text);opacity:1;}
+  .toggle-track{width:36px;height:20px;border-radius:99px;background:var(--toggle-bg);position:relative;transition:background .2s;flex-shrink:0;}
+  .toggle-knob{position:absolute;top:3px;left:3px;width:14px;height:14px;border-radius:50%;background:var(--toggle-knob);transition:transform .2s,background .2s;box-shadow:0 1px 3px var(--shadow);}
+  [data-theme="dark"] .toggle-knob{transform:translateX(16px);}
+  [data-theme="dark"] .toggle-track{background:#4a4845;}
+  /* Panel */
+  .panel{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:24px;margin-bottom:20px;transition:background .2s,border-color .2s;}
+  .stat-row{display:flex;gap:40px;}
+  .stat-num{font-size:2rem;font-weight:700;letter-spacing:-0.03em;line-height:1;}
+  .stat-label{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+  /* Upload */
+  .upload-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  @media(max-width:600px){.upload-grid{grid-template-columns:1fr;}}
+  .upload-zone{border:1.5px dashed var(--border);border-radius:6px;padding:18px 16px;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;background:var(--bg);}
+  .upload-zone:hover,.upload-zone.dragover{border-color:var(--accent);background:var(--pending-bg);}
+  .upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:1.4rem;margin-bottom:5px;}
+  .upload-label{font-weight:600;font-size:0.88rem;}
+  .upload-hint{color:var(--muted);font-size:0.76rem;margin-top:3px;}
+  .upload-status{margin-top:8px;font-size:0.78rem;min-height:1.1em;font-weight:500;}
+  .upload-status.ok{color:var(--good);}
+  .upload-status.err{color:var(--bad);}
+  .upload-status.loading{color:var(--muted);}
+  /* Controls */
+  .controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px;}
+  .controls label{font-size:0.82rem;color:var(--muted);}
+  input[type=range]{width:160px;accent-color:var(--accent);}
+  /* Buttons */
+  button{font-family:inherit;font-size:0.8rem;font-weight:600;border:none;border-radius:5px;padding:6px 13px;cursor:pointer;transition:opacity .12s;}
+  button:hover{opacity:.78;}
+  .btn-primary{background:var(--accent);color:var(--bg);}
+  .btn-approve{background:var(--good-bg);color:var(--good);border:1px solid transparent;}
+  .btn-reject{background:var(--bad-bg);color:var(--bad);border:1px solid transparent;}
+  .btn-remove{background:transparent;color:var(--bad);border:1px solid var(--border);font-size:0.75rem;}
+  .btn-remove:hover{border-color:var(--bad);opacity:1;}
+  /* Tables */
+  .table-wrap{overflow-x:auto;}
+  table{width:100%;border-collapse:collapse;font-size:0.82rem;}
+  th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--border);vertical-align:top;}
+  th{color:var(--muted);font-weight:600;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.06em;background:var(--bg);}
+  tr:last-child td{border-bottom:none;}
+  tr:hover td{background:var(--row-hover);}
+  /* Pills */
+  .pill{display:inline-block;font-size:0.7rem;font-weight:600;padding:2px 8px;border-radius:99px;}
+  .pill-pending{background:var(--pending-bg);color:var(--pending);}
+  .pill-approve{background:var(--good-bg);color:var(--good);}
+  .pill-reject{background:var(--bad-bg);color:var(--bad);}
+  .pill-match{background:var(--good-bg);color:var(--good);}
+  .pill-no-match{background:var(--bad-bg);color:var(--bad);}
+  /* Confidence bar */
+  .conf-bar-track{display:inline-block;width:80px;height:4px;background:var(--border);border-radius:2px;vertical-align:middle;margin-right:6px;}
+  .conf-bar-fill{height:100%;border-radius:2px;background:var(--accent);}
+  /* Misc */
+  .muted{color:var(--muted);}
+  .mono{font-family:ui-monospace,monospace;font-size:0.78rem;}
+  .loading{color:var(--muted);font-style:italic;font-size:0.85rem;padding:8px 0;}
+  .empty{color:var(--muted);font-size:0.85rem;padding:8px 0;}
+  .tag{display:inline-block;background:var(--tag-bg);color:var(--muted);border-radius:3px;padding:1px 6px;font-size:0.72rem;margin-right:3px;}
+  /* Reviewer bar */
+  .reviewer-bar{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:6px;margin-bottom:16px;width:fit-content;transition:border-color .15s;}
+  .reviewer-bar.invalid{border-color:var(--bad);}
+  .reviewer-bar label{font-size:0.78rem;color:var(--muted);white-space:nowrap;}
+  .reviewer-bar input{font-family:inherit;font-size:0.82rem;font-weight:500;border:none;background:transparent;outline:none;color:var(--text);width:200px;}
+  .reviewer-bar input::placeholder{color:var(--muted);opacity:.6;}
+  .reviewer-dot{width:7px;height:7px;border-radius:50%;background:var(--good);flex-shrink:0;transition:background .2s;}
+  .reviewer-bar.invalid .reviewer-dot{background:var(--bad);}
+  .reviewer-required{font-size:0.68rem;font-weight:600;color:var(--bad);background:var(--bad-bg);padding:1px 6px;border-radius:3px;margin-left:4px;}
+  .reviewer-hint{font-size:0.74rem;color:var(--bad);margin-bottom:14px;display:none;}
+  .reviewer-hint.visible{display:block;}
+  @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
+  .shake{animation:shake .35s ease;}
+  /* Audit */
+  .audit-entry{display:flex;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);}
+  .audit-entry:last-child{border-bottom:none;}
+  .audit-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0;margin-top:2px;}
+  .audit-icon-approve{background:var(--good-bg);color:var(--good);}
+  .audit-icon-reject{background:var(--bad-bg);color:var(--bad);}
+  .audit-body{flex:1;}
+  .audit-codes{font-size:0.82rem;font-weight:600;}
+  .audit-codes .mono{font-size:0.8rem;}
+  .audit-meta{font-size:0.76rem;color:var(--muted);margin-top:2px;}
+  .audit-meta strong{color:var(--text);font-weight:600;}
+  .audit-ts{font-size:0.72rem;color:var(--muted);margin-top:4px;}
+  /* CSV Explorer */
+  #csv-explorer-section{margin-top:48px;border-top:2px solid var(--border);padding-top:36px;}
+  .section-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .explorer-header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:20px;flex-wrap:wrap;}
+  .explorer-intro{font-size:0.82rem;color:var(--muted);max-width:540px;line-height:1.6;}
+  .explorer-drop-area{border:1.5px dashed var(--border);border-radius:6px;padding:16px 24px;text-align:center;cursor:pointer;position:relative;transition:border-color .15s,background .15s;background:var(--surface);min-width:200px;}
+  .explorer-drop-area:hover,.explorer-drop-area.dragover{border-color:var(--accent);background:var(--pending-bg);}
+  .explorer-drop-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .explorer-drop-label{font-weight:600;font-size:0.85rem;}
+  .explorer-drop-hint{color:var(--muted);font-size:0.75rem;margin-top:2px;}
+  .explorer-meta{display:flex;gap:24px;flex-wrap:wrap;font-size:0.78rem;color:var(--muted);margin-bottom:14px;}
+  .explorer-meta strong{color:var(--text);}
+  .explorer-filter{display:flex;gap:8px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+  .explorer-filter label{font-size:0.78rem;color:var(--muted);}
+  .filter-btn{font-size:0.74rem;font-weight:600;padding:4px 12px;border-radius:99px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;transition:border-color .12s,color .12s,background .12s;font-family:inherit;}
+  .filter-btn:hover{border-color:var(--accent);color:var(--text);opacity:1;}
+  .filter-btn.active{border-color:var(--accent);background:var(--accent);color:var(--bg);opacity:1;}
+</style>
+</head>
+<body>
+
+<div class="site-header">
+  <div>
+    <h1>Material Code Harmonizer</h1>
+    <div class="subtitle">SIH26099 &mdash; AI-Driven Standardization of Material Codes Across CPSEs &nbsp;&middot;&nbsp; Prototype</div>
+  </div>
+  <button class="theme-toggle" id="theme-toggle" title="Toggle dark / light mode" onclick="toggleTheme()">
+    <span id="theme-label">Light</span>
+    <span class="toggle-track"><span class="toggle-knob"></span></span>
+  </button>
+</div>
+
+<div class="panel">
+  <h2>Overview</h2>
+  <div class="stat-row">
+    <div><div class="stat-num" id="stat-total">&mdash;</div><div class="stat-label">Proposed matches</div></div>
+    <div><div class="stat-num" id="stat-approved">&mdash;</div><div class="stat-label">Approved</div></div>
+    <div><div class="stat-num" id="stat-pending">&mdash;</div><div class="stat-label">Awaiting review</div></div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Data Sources</h2>
+  <p style="color:var(--muted);font-size:0.8rem;margin-bottom:16px">
+    Replace either CPSE dataset by uploading a new CSV. Required columns:
+    <span class="mono">material_code, description, category, material_type, dimension, specification, application, unit</span>.
+    Matching re-runs automatically after upload.
+  </p>
+  <div class="upload-grid">
+    <div>
+      <div class="upload-zone" id="zone-a"><input type="file" id="file-a" accept=".csv">
+        <div class="upload-icon">&#128196;</div>
+        <div class="upload-label">CPSE-A Dataset</div>
+        <div class="upload-hint">Click or drag &amp; drop a .csv file</div>
+      </div>
+      <div class="upload-status" id="status-a"></div>
+    </div>
+    <div>
+      <div class="upload-zone" id="zone-b"><input type="file" id="file-b" accept=".csv">
+        <div class="upload-icon">&#128196;</div>
+        <div class="upload-label">CPSE-B Dataset</div>
+        <div class="upload-hint">Click or drag &amp; drop a .csv file</div>
+      </div>
+      <div class="upload-status" id="status-b"></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2>Proposed Matches</h2>
+  <div class="reviewer-bar" id="reviewer-bar">
+    <span class="reviewer-dot" id="reviewer-dot"></span>
+    <label for="reviewer-name">Reviewing as</label>
+    <input type="text" id="reviewer-name" placeholder="Enter your name (required to act)" maxlength="60" autocomplete="off">
+    <span class="reviewer-required">Required</span>
+  </div>
+  <div class="reviewer-hint" id="reviewer-hint">&#9888; Enter your name (min 2 characters) before approving or rejecting.</div>
+  <div class="controls">
+    <label for="threshold">Threshold &nbsp;<strong id="threshold-val">0.55</strong></label>
+    <input type="range" id="threshold" min="0.3" max="0.9" step="0.05" value="0.55">
+    <button class="btn-primary" onclick="loadMatches()">Re-run</button>
+  </div>
+  <div class="table-wrap"><div id="matches-container" class="loading">Loading proposed matches&hellip;</div></div>
+</div>
+
+<div class="panel">
+  <h2>Harmonization Log</h2>
+  <div class="table-wrap"><div id="log-container" class="loading">Loading log&hellip;</div></div>
+</div>
+
+<div class="panel">
+  <h2>Audit Trail</h2>
+  <div id="audit-container" class="loading">Loading audit trail&hellip;</div>
+</div>
+
+<section id="csv-explorer-section">
+  <div class="section-label">CSV Explorer</div>
+  <div class="explorer-header">
+    <p class="explorer-intro">Load any CSV file locally to inspect its rows and see which material codes already appear in the current harmonization results. Read-only &mdash; does not affect the matching pipeline.</p>
+    <div>
+      <div class="explorer-drop-area" id="explorer-zone"><input type="file" id="explorer-file" accept=".csv">
+        <div class="upload-icon">&#128194;</div>
+        <div class="explorer-drop-label">Load a CSV file</div>
+        <div class="explorer-drop-hint">Click or drag &amp; drop</div>
+      </div>
+      <div class="upload-status" id="explorer-status"></div>
+    </div>
+  </div>
+  <div id="explorer-controls" style="display:none">
+    <div class="explorer-meta" id="explorer-meta"></div>
+    <div class="explorer-filter">
+      <label>Show:</label>
+      <button class="filter-btn active" id="filter-all"     onclick="setFilter('all')">All</button>
+      <button class="filter-btn"       id="filter-match"   onclick="setFilter('match')">Matched</button>
+      <button class="filter-btn"       id="filter-nomatch" onclick="setFilter('nomatch')">Not matched</button>
+    </div>
+  </div>
+  <div id="explorer-table-wrap" class="table-wrap"></div>
+</section>
+
+<script>
+const API="";
+
+/* Theme */
+(function(){const s=localStorage.getItem("theme")||"light";applyTheme(s);})();
+function applyTheme(t){document.documentElement.setAttribute("data-theme",t);const l=document.getElementById("theme-label");if(l)l.textContent=t==="dark"?"Dark":"Light";localStorage.setItem("theme",t);}
+function toggleTheme(){const c=document.documentElement.getAttribute("data-theme")||"light";applyTheme(c==="dark"?"light":"dark");}
+
+/* Reviewer */
+const reviewerInput=document.getElementById("reviewer-name");
+const reviewerBar=document.getElementById("reviewer-bar");
+const reviewerHint=document.getElementById("reviewer-hint");
+reviewerInput.value=localStorage.getItem("reviewer_name")||"";
+reviewerInput.addEventListener("input",()=>{
+  const v=reviewerInput.value.trim();
+  localStorage.setItem("reviewer_name",v);
+  if(v.length>=2){reviewerBar.classList.remove("invalid");reviewerHint.classList.remove("visible");}
+});
+function getReviewerName(){return reviewerInput.value.trim();}
+function validateReviewer(){
+  const n=getReviewerName();
+  if(n.length<2){
+    reviewerBar.classList.add("invalid","shake");
+    reviewerHint.classList.add("visible");
+    reviewerInput.focus();
+    reviewerBar.addEventListener("animationend",()=>reviewerBar.classList.remove("shake"),{once:true});
+    return false;
+  }
+  reviewerBar.classList.remove("invalid");reviewerHint.classList.remove("visible");return true;
+}
+
+/* Threshold */
+document.getElementById("threshold").addEventListener("input",e=>{document.getElementById("threshold-val").textContent=e.target.value;});
+
+/* Matches */
+async function loadMatches(){
+  const threshold=document.getElementById("threshold").value;
+  const container=document.getElementById("matches-container");
+  container.innerHTML='<div class="loading">Running matching pipeline&hellip;</div>';
+  const res=await fetch(`${API}/api/match?threshold=${threshold}`);
+  const data=await res.json();
+  document.getElementById("stat-total").textContent=data.count;
+  const pending=data.matches.filter(m=>m.status==="pending").length;
+  const approved=data.matches.filter(m=>m.status==="approve").length;
+  document.getElementById("stat-pending").textContent=pending;
+  document.getElementById("stat-approved").textContent=approved;
+  if(data.matches.length===0){container.innerHTML='<p class="empty">No matches found above this threshold. Try lowering it.</p>';return;}
+  let html=`<table><thead><tr><th>CPSE-A</th><th>CPSE-B</th><th>Confidence</th><th>Status</th><th>Action</th></tr></thead><tbody>`;
+  data.matches.forEach(m=>{
+    const fill=Math.round(m.confidence);
+    const sc=m.status==="approve"?"pill-approve":m.status==="reject"?"pill-reject":"pill-pending";
+    const b=m.breakdown||{};
+    html+=`<tr>
+      <td><span class="mono">${m.a_code}</span><br><span class="muted">${m.a_description}</span><br><span class="tag">${m.a_material_type}</span><span class="tag">${m.a_dimension}</span></td>
+      <td><span class="mono">${m.b_code}</span><br><span class="muted">${m.b_description}</span><br><span class="tag">${m.b_material_type}</span><span class="tag">${m.b_dimension}</span></td>
+      <td><span class="conf-bar-track"><span class="conf-bar-fill" style="width:${fill}%"></span></span>${m.confidence}%<br>
+        <span class="muted" style="font-size:0.72rem">text ${b.text_similarity}% &middot; mat ${b.material_similarity}% &middot; dim ${b.dimension_similarity}%</span></td>
+      <td><span class="pill ${sc}">${m.status}</span></td>
+      <td>${m.status==="pending"?`
+        <button class="btn-approve" onclick='decide(${JSON.stringify(m).replace(/'/g,"&apos;")}, "approve")'>Approve</button>
+        <button class="btn-reject"  onclick='decide(${JSON.stringify(m).replace(/'/g,"&apos;")}, "reject")'>Reject</button>
+      `:"&mdash;"}</td></tr>`;
+  });
+  html+="</tbody></table>";
+  container.innerHTML=html;
+  if(window._explorerRows)renderExplorer();
+}
+
+async function decide(match,decision){
+  if(!validateReviewer())return;
+  await fetch(`${API}/api/review`,{method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({a_code:match.a_code,a_description:match.a_description,
+      b_code:match.b_code,b_description:match.b_description,
+      confidence:match.confidence,decision,reviewer_name:getReviewerName()})});
+  await loadMatches();await loadLog();await loadAudit();
+}
+
+async function loadLog(){
+  const container=document.getElementById("log-container");
+  const res=await fetch(`${API}/api/approved`);const rows=await res.json();
+  if(rows.length===0){container.innerHTML='<p class="empty">No decisions recorded yet.</p>';return;}
+  let html=`<table><thead><tr><th>Harmonized Code</th><th>Source A</th><th>Source B</th><th>Confidence</th><th>Decision</th><th>Reviewer</th><th>When</th><th>Action</th></tr></thead><tbody>`;
+  rows.forEach(r=>{
+    const sc=r.status==="approve"?"pill-approve":"pill-reject";
+    const ts=r.reviewed_at?formatDate(r.reviewed_at):"&mdash;";
+    const reviewer=r.reviewer_name||"&mdash;";
+    html+=`<tr>
+      <td class="mono">${r.harmonized_code||"&mdash;"}</td>
+      <td><span class="mono">${r.a_code}</span><br><span class="muted">${r.a_description}</span></td>
+      <td><span class="mono">${r.b_code}</span><br><span class="muted">${r.b_description}</span></td>
+      <td>${r.confidence}%</td>
+      <td><span class="pill ${sc}">${r.status}</span></td>
+      <td style="white-space:nowrap"><strong>${escHtml(reviewer)}</strong></td>
+      <td class="muted" style="white-space:nowrap;font-size:0.76rem">${ts}</td>
+      <td><button class="btn-remove" data-acode="${r.a_code}" data-bcode="${r.b_code}">&#x21A9; Remove</button></td></tr>`;
+  });
+  html+="</tbody></table>";container.innerHTML=html;
+  container.querySelectorAll(".btn-remove").forEach(btn=>{btn.addEventListener("click",()=>removeMatch(btn.dataset.acode,btn.dataset.bcode,btn));});
+}
+
+async function loadAudit(){
+  const container=document.getElementById("audit-container");
+  const res=await fetch(`${API}/api/approved`);const rows=await res.json();
+  if(rows.length===0){container.innerHTML='<p class="empty">No audit entries yet. Decisions will appear here.</p>';return;}
+  const sorted=[...rows].reverse();let html="";
+  sorted.forEach(r=>{
+    const isA=r.status==="approve";
+    const ts=r.reviewed_at?formatDate(r.reviewed_at,true):"Unknown time";
+    const reviewer=r.reviewer_name||"&mdash;";
+    html+=`<div class="audit-entry">
+      <div class="audit-icon ${isA?"audit-icon-approve":"audit-icon-reject"}">${isA?"&#10003;":"&#10007;"}</div>
+      <div class="audit-body">
+        <div class="audit-codes"><span class="mono">${r.a_code}</span><span class="muted" style="margin:0 6px">&#8596;</span><span class="mono">${r.b_code}</span>${isA?`<span class="mono muted" style="margin-left:8px">${r.harmonized_code||""}</span>`:""}</div>
+        <div class="audit-meta">${isA?"Approved":"Rejected"} by <strong>${escHtml(reviewer)}</strong> &nbsp;&middot;&nbsp; Confidence ${r.confidence}%</div>
+        <div class="audit-ts">${ts}</div>
+      </div></div>`;
+  });
+  container.innerHTML=html;
+}
+
+async function removeMatch(a_code,b_code,btn){
+  btn.disabled=true;btn.textContent="Removing\u2026";
+  try{
+    const res=await fetch(`${API}/api/remove`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({a_code,b_code})});
+    if(!res.ok)throw new Error("Server error: "+res.status);
+    await loadMatches();await loadLog();await loadAudit();
+  }catch(e){btn.disabled=false;btn.textContent="\u21A9 Remove";alert("Failed to remove: "+e.message);}
+}
+
+function escHtml(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function formatDate(iso,long){
+  try{const d=new Date(iso);
+    if(long)return d.toLocaleString(undefined,{year:"numeric",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit",second:"2-digit"});
+    return d.toLocaleString(undefined,{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
+  }catch{return iso;}
+}
+function setStatus(el,type,msg){el.className=`upload-status ${type}`;el.textContent=msg;}
+
+function setupUploadZone(inputId,zoneId,statusId,cpse){
+  const input=document.getElementById(inputId);const zone=document.getElementById(zoneId);const status=document.getElementById(statusId);
+  zone.addEventListener("dragover",e=>{e.preventDefault();zone.classList.add("dragover");});
+  zone.addEventListener("dragleave",()=>zone.classList.remove("dragover"));
+  zone.addEventListener("drop",e=>{e.preventDefault();zone.classList.remove("dragover");if(e.dataTransfer.files[0])uploadCSV(e.dataTransfer.files[0],cpse,status,zone);});
+  input.addEventListener("change",()=>{if(input.files[0])uploadCSV(input.files[0],cpse,status,zone);input.value="";});
+}
+async function uploadCSV(file,cpse,statusEl,zone){
+  if(!file.name.toLowerCase().endsWith(".csv")){setStatus(statusEl,"err","\u2717 Please select a .csv file");return;}
+  setStatus(statusEl,"loading","Uploading\u2026");zone.classList.add("dragover");
+  const form=new FormData();form.append("file",file);
+  try{
+    const res=await fetch(`${API}/api/upload/${cpse}`,{method:"POST",body:form});const data=await res.json();
+    zone.classList.remove("dragover");
+    if(!res.ok){setStatus(statusEl,"err",`\u2717 ${data.detail||"Upload failed"}`);return;}
+    setStatus(statusEl,"ok",`\u2714 ${file.name} \u2014 ${data.rows} rows loaded. Re-running matches\u2026`);
+    await loadMatches();await loadLog();
+    setStatus(statusEl,"ok",`\u2714 ${file.name} \u2014 ${data.rows} rows. Done.`);
+  }catch(e){zone.classList.remove("dragover");setStatus(statusEl,"err",`\u2717 Network error: ${e.message}`);}
+}
+setupUploadZone("file-a","zone-a","status-a","a");
+setupUploadZone("file-b","zone-b","status-b","b");
+
+/* CSV Explorer */
+window._explorerRows=null;window._explorerFilter="all";
+function getKnownCodes(){
+  const codes=new Set();
+  document.querySelectorAll("#matches-container table tbody tr").forEach(tr=>{tr.querySelectorAll("td").forEach((td,i)=>{if(i<2){const m=td.querySelector(".mono");if(m)codes.add(m.textContent.trim());}});});
+  document.querySelectorAll("#log-container table tbody tr").forEach(tr=>{const tds=tr.querySelectorAll("td");[1,2].forEach(i=>{if(tds[i]){const m=tds[i].querySelector(".mono");if(m)codes.add(m.textContent.trim());}});});
+  return codes;
+}
+function parseCSV(text){
+  const lines=text.split(/\r?\n/).filter(l=>l.trim());
+  if(lines.length<2)return{headers:[],rows:[]};
+  const headers=lines[0].split(",").map(h=>h.trim().replace(/^"|"$/g,""));
+  const rows=lines.slice(1).map(line=>{
+    const vals=[];let cur="",inQ=false;
+    for(let i=0;i<line.length;i++){const c=line[i];if(c==='"')inQ=!inQ;else if(c===","&&!inQ){vals.push(cur.trim());cur="";}else cur+=c;}
+    vals.push(cur.trim());const obj={};
+    headers.forEach((h,i)=>{obj[h]=vals[i]!==undefined?vals[i]:"";});return obj;
+  });
+  return{headers,rows};
+}
+function setFilter(f){
+  window._explorerFilter=f;
+  ["all","match","nomatch"].forEach(id=>{document.getElementById(`filter-${id}`).classList.toggle("active",id===f);});
+  renderExplorer();
+}
+function renderExplorer(){
+  const wrap=document.getElementById("explorer-table-wrap");
+  if(!window._explorerRows){wrap.innerHTML="";return;}
+  const{headers,rows,filename}=window._explorerRows;
+  const codes=getKnownCodes();const codeCol=headers.find(h=>/material.?code/i.test(h))||headers[0];
+  const annotated=rows.map(r=>({...r,_matched:codes.has((r[codeCol]||"").trim())}));
+  const visible=annotated.filter(r=>{if(window._explorerFilter==="match")return r._matched;if(window._explorerFilter==="nomatch")return!r._matched;return true;});
+  const total=annotated.length;const matched=annotated.filter(r=>r._matched).length;
+  document.getElementById("explorer-meta").innerHTML=`<span>File: <strong>${filename}</strong></span><span>Rows: <strong>${total}</strong></span><span>Matched: <strong style="color:var(--good)">${matched}</strong></span><span>Not matched: <strong style="color:var(--bad)">${total-matched}</strong></span>`;
+  if(visible.length===0){wrap.innerHTML='<p class="empty">No rows to show for this filter.</p>';return;}
+  let html=`<table><thead><tr><th>#</th>${headers.map(h=>`<th>${h}</th>`).join("")}<th>Status</th></tr></thead><tbody>`;
+  visible.forEach((r,i)=>{const pill=r._matched?'<span class="pill pill-match">Matched</span>':'<span class="pill pill-no-match">No match</span>';html+=`<tr><td class="muted">${i+1}</td>${headers.map(h=>`<td>${r[h]??""}</td>`).join("")}<td>${pill}</td></tr>`;});
+  html+="</tbody></table>";wrap.innerHTML=html;
+}
+(function(){
+  const zone=document.getElementById("explorer-zone");const input=document.getElementById("explorer-file");const status=document.getElementById("explorer-status");
+  function handleFile(file){
+    if(!file||!file.name.toLowerCase().endsWith(".csv")){setStatus(status,"err","\u2717 Please select a .csv file");return;}
+    setStatus(status,"loading","Reading\u2026");
+    const reader=new FileReader();
+    reader.onload=e=>{const{headers,rows}=parseCSV(e.target.result);if(!rows.length){setStatus(status,"err","\u2717 No data rows found");return;}
+      window._explorerRows={headers,rows,filename:file.name};document.getElementById("explorer-controls").style.display="";setStatus(status,"ok",`\u2714 ${file.name} \u2014 ${rows.length} rows`);renderExplorer();};
+    reader.onerror=()=>setStatus(status,"err","\u2717 Could not read file");reader.readAsText(file);
+  }
+  zone.addEventListener("dragover",e=>{e.preventDefault();zone.classList.add("dragover");});
+  zone.addEventListener("dragleave",()=>zone.classList.remove("dragover"));
+  zone.addEventListener("drop",e=>{e.preventDefault();zone.classList.remove("dragover");handleFile(e.dataTransfer.files[0]);});
+  input.addEventListener("change",()=>{if(input.files[0])handleFile(input.files[0]);input.value="";});
+})();
+
+loadMatches();loadLog();loadAudit();
+</script>
+</body>
+</html>
