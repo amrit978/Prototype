@@ -1,0 +1,31 @@
+material_code,description,category,material_type,dimension,specification,application,unit
+IOC-PIP-1001,MS Pipe 50mm Dia Sch 40,Piping,Mild Steel,50mm diameter,IS 1239,General water supply lines,MTR
+IOC-PIP-1002,Mild Steel Pipe 100 MM Schedule 40,Piping,Mild Steel,100mm diameter,IS 1239,High pressure process piping,MTR
+IOC-PIP-1003,GI Pipe 25mm Medium Class,Piping,Galvanized Iron,25mm diameter,IS 1239,Low pressure water distribution,MTR
+IOC-VLV-2001,Gate Valve 50mm CS Class 150,Valves,Carbon Steel,50mm bore,ASME B16.34,Isolation in process lines,NOS
+IOC-VLV-2002,Ball Valve 25mm SS316 Class 300,Valves,Stainless Steel 316,25mm bore,ASME B16.34,Corrosion resistant chemical service,NOS
+IOC-VLV-2003,Butterfly Valve 150mm Wafer Type,Valves,Cast Iron,150mm bore,API 609,Flow control in large diameter lines,NOS
+IOC-FLG-3001,Flange WNRF 50NB CS 150#,Flanges,Carbon Steel,50NB,ASME B16.5,Pipe joint connection,NOS
+IOC-FLG-3002,Blind Flange 100NB CS Class 150,Flanges,Carbon Steel,100NB,ASME B16.5,Sealing pipe end,NOS
+IOC-GSK-4001,Spiral Wound Gasket 50NB,Gaskets,Stainless Steel with Graphite Filler,50NB,ASME B16.20,Sealing flange joints,NOS
+IOC-BLT-5001,Hex Bolt M16x60 SS304,Fasteners,Stainless Steel 304,M16 x 60mm,IS 1364,Flange and structural fastening,NOS
+IOC-BLT-5002,Hexagonal Nut M16 Stainless Steel 304,Fasteners,Stainless Steel 304,M16,IS 1364,Pairs with hex bolts,NOS
+IOC-PMP-6001,Centrifugal Pump 10HP 3-Phase,Pumps,Cast Iron Body,10HP,IS 1520,Water and light fluid transfer,NOS
+IOC-PMP-6002,Submersible Pump 5HP Single Phase,Pumps,Stainless Steel Body,5HP,IS 8034,Borewell and sump water extraction,NOS
+IOC-CBL-7001,Copper Armoured Cable 3.5 Core 25 Sq mm,Cables,Copper Conductor,3.5 core 25 sq mm,IS 7098,Power distribution wiring,MTR
+IOC-CBL-7002,XLPE Insulated Cable 4 Core 16 Sqmm,Cables,Copper Conductor XLPE Insulated,4 core 16 sq mm,IS 7098,Industrial power wiring,MTR
+IOC-SFT-8001,Safety Helmet Yellow ISI Marked,Safety Equipment,High Density Polyethylene,Standard head size,IS 2925,Head protection on site,NOS
+IOC-SFT-8002,Industrial Safety Gloves Leather,Safety Equipment,Leather,Standard hand size,IS 2573,Hand protection during handling,PAIR
+IOC-SFT-8003,Fire Extinguisher CO2 Type 4.5Kg,Safety Equipment,Steel Cylinder with CO2,4.5kg capacity,IS 2878,Fire suppression electrical fires,NOS
+IOC-INS-9001,Rockwool Insulation 50mm Thickness,Insulation,Rockwool Fiber,50mm thickness,IS 8183,Thermal insulation of pipes and tanks,SQM
+IOC-PNT-1101,Epoxy Paint Red Oxide Primer,Paints,Epoxy Resin,Standard viscosity,IS 2074,Anti corrosion surface coating,LTR
+IOC-WLD-1201,Welding Electrode E7018 3.15mm,Welding Consumables,Low Hydrogen Steel,3.15mm diameter,AWS A5.1,Structural steel welding,KG
+IOC-BRG-1301,Ball Bearing 6205 2RS,Bearings,Chrome Steel,6205 series,ISO 15,Rotating shaft support in motors,NOS
+IOC-MTR-1401,Induction Motor 15HP 3-Phase 415V,Motors,Cast Iron Body Copper Winding,15HP 415V,IS 325,Driving pumps and compressors,NOS
+IOC-TNK-1501,MS Storage Tank 5000 Ltr Capacity,Tanks,Mild Steel,5000 litre capacity,IS 803,Bulk liquid storage,NOS
+IOC-INS-1601,Pressure Gauge 0-100 PSI Dial Type,Instrumentation,Stainless Steel Casing,0 to 100 PSI range,IS 3624,Pressure monitoring in pipelines,NOS
+IOC-INS-1602,Temperature Transmitter RTD Type,Instrumentation,Stainless Steel Sheath,PT100 RTD element,IEC 60751,Temperature monitoring in process,NOS
+IOC-CHM-1701,Industrial Grade Caustic Soda Flakes,Chemicals,Sodium Hydroxide,Flake form,IS 252,Water treatment and cleaning,KG
+IOC-LUB-1801,Grease Multipurpose Lithium Based,Lubricants,Lithium Complex Base,Standard grade NLGI 2,IS 7623,Bearing and machinery lubrication,KG
+IOC-FLT-1901,Air Filter Cartridge Type 10 Micron,Filters,Cellulose Media,10 micron rating,ISO 16889,Compressed air purification,NOS
+IOC-HSE-2001,Hydraulic Hose 1 inch 2-Wire Braided,Hoses,Synthetic Rubber with Steel Braid,1 inch bore,SAE 100R2,High pressure hydraulic fluid transfer,MTR
